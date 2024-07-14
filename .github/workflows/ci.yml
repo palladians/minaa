@@ -1,0 +1,22 @@
+name: MinAA CI
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    name: Test & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Build lib
+        run: bun run build
+        working-directory: packages/contracts
+      - name: Test lib
+        run: bun run test
+        working-directory: packages/contracts

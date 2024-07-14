@@ -1,0 +1,24 @@
+{
+  "name": "minaa",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "format": "bunx biome check --write .",
+    "format:unsafe": "bunx biome check --write --unsafe .",
+    "lint": "bunx biome check .",
+    "clean": "rimraf node_modules bun.lockb"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "@tsconfig/bun": "^1.0.7",
+    "rimraf": "^6.0.1",
+    "zkapp-cli": "^0.21.5",
+    "typescript": "^5.1"
+  }
+}

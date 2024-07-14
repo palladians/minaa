@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "deployAliases": {
+    "lightnet3": {
+      "networkId": "testnet",
+      "url": "http://127.0.0.1:8080/graphql",
+      "keyPath": "keys/lightnet3.json",
+      "feepayerKeyPath": "/Users/tomek/.cache/zkapp-cli/keys/lightnet3.json",
+      "feepayerAlias": "lightnet3",
+      "fee": "0.01"
+    }
+  }
+}
