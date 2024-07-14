@@ -9,6 +9,19 @@ jobs:
   test:
     name: Test & Build
     runs-on: ubuntu-latest
+    services:
+      mina-local-network:
+        image: o1labs/mina-local-network:compatible-latest-lightnet
+        env:
+          NETWORK_TYPE: "single-node"
+          PROOF_LEVEL: "none"
+          LOG_LEVEL: "Info"
+        ports:
+          - 3085:3085
+          - 5432:5432
+          - 8080:8080
+          - 8181:8181
+          - 8282:8282
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -17,6 +30,12 @@ jobs:
       - name: Build lib
         run: bun run build
         working-directory: packages/contracts
+      - name: Wait for Mina network readiness
+        uses: o1-labs/wait-for-mina-network-action@v1
+        with:
+          mina-graphql-port: 3085
+          max-attempts: 60
+          polling-interval-ms: 10000
       - name: Test lib
         run: bun run test
         working-directory: packages/contracts
