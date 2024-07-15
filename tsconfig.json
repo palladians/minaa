@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/bun/tsconfig.json",
   "compilerOptions": {
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false

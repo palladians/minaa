@@ -4,10 +4,7 @@
   "license": "Apache-2.0",
   "type": "module",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
+  "workspaces": ["packages/*", "apps/*"],
   "scripts": {
     "format": "bunx biome check --write .",
     "format:unsafe": "bunx biome check --write --unsafe .",

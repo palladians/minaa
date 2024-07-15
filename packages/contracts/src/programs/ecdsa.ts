@@ -1,28 +1,37 @@
 import {
   Bool,
-  createForeignCurveV2,
-  ZkProgram,
   Crypto,
+  ZkProgram,
   createEcdsaV2,
-  Bytes,
+  createForeignCurveV2,
 } from "o1js";
 
 // TODO: Adjust to secp256r1
-class Secp256k1 extends createForeignCurveV2(Crypto.CurveParams.Secp256k1) {}
-class Ecdsa extends createEcdsaV2(Secp256k1) {}
-class Bytes32 extends Bytes(32) {}
+export class Secp256k1 extends createForeignCurveV2(
+  Crypto.CurveParams.Secp256k1,
+) {}
+export class Secp256k1Scalar extends Secp256k1.Scalar {}
+export class Secp256k1Signature extends createEcdsaV2(Secp256k1) {}
 
-export const ecdsa = ZkProgram({
+export const ecdsaProgram = ZkProgram({
   name: "ecdsa",
-  publicInput: Bytes32.provable,
   publicOutput: Bool,
-
   methods: {
     verifyEcdsa: {
-      privateInputs: [Ecdsa.provable, Secp256k1.provable],
-      async method(message: Bytes32, signature: Ecdsa, publicKey: Secp256k1) {
-        return signature.verifyV2(message, publicKey);
+      privateInputs: [
+        Secp256k1Scalar.provable,
+        Secp256k1Signature.provable,
+        Secp256k1.provable,
+      ],
+      async method(
+        message: Secp256k1Scalar,
+        signature: Secp256k1Signature,
+        publicKey: Secp256k1,
+      ) {
+        return signature.verifySignedHashV2(message, publicKey);
       },
     },
   },
 });
+
+export type EcdsaProgram = typeof ecdsaProgram;

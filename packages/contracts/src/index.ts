@@ -1,3 +1,3 @@
-import { Ownable } from "./contracts/Ownable.js";
+import { Ownable } from "./contracts/Ownable.js"
 
-export { Ownable };
+export { Ownable }
